@@ -1,0 +1,15 @@
+$bg: #f4f4f8;
+$accent: #2b8aef;
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: $bg;
+  color: #222;
+  padding: 2rem;
+}
+
+h1 {
+  color: $accent;
+}
+
+/* Add more styles here */
