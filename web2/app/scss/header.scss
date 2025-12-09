@@ -1,0 +1,61 @@
+// partial: header.scss
+
+.resume-header {
+  background-color: $color-navy;
+  color: #ffffff;
+  padding: 2.5rem 2.5rem 1.5rem;
+  border-bottom-right-radius: 80px;
+
+  .resume-title-small {
+    font-size: 1.15rem;
+    letter-spacing: 0.25rem;
+  }
+
+  .resume-title-large {
+    font-size: 3.1rem;
+    font-weight: 700;
+    letter-spacing: 0.2rem;
+  }
+
+  .resume-role {
+    display: inline-block;
+    margin-top: 1.25rem;
+    padding: 0.35rem 2.5rem;
+    background-color: $color-orange;
+    border-radius: 999px;
+    letter-spacing: 0.16rem;
+    font-size: 0.9rem;
+  }
+
+  .resume-quote {
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+    max-width: 480px;
+  }
+}
+
+.resume-photo-wrapper {
+  position: relative;
+  padding: 2rem 2.5rem 1.5rem;
+  background-color: transparent;
+
+  .resume-photo-circle {
+    width: 210px;
+    height: 250px;
+    border-radius: 120px;
+    border: 6px solid $color-orange;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin-left: auto;
+  }
+
+  .resume-photo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}

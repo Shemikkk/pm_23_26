@@ -1,0 +1,23 @@
+// partial: hobbies.scss
+
+.resume-hobby-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 1px solid $color-navy;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  color: $color-orange;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 4px #ffffff, 0 0 0 5px $color-navy;
+}
+
+.resume-hobby-label {
+  font-size: 0.8rem;
+  margin-top: 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08rem;
+  color: $color-navy;
+}
