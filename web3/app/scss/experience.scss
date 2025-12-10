@@ -1,0 +1,78 @@
+// partial: experience.scss
+
+.resume-content {
+  padding: 2.2rem 2.5rem 2.5rem;
+  background-color: #ffffff;
+}
+
+.resume-section-title {
+  font-size: 1.1rem;
+  letter-spacing: 0.12rem;
+  font-weight: 700;
+}
+
+.resume-section-underline {
+  border-top: 2px solid #222;
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: -1px;
+    width: 60px;
+    border-top: 3px solid $color-orange;
+  }
+}
+
+.resume-experience-item {
+  display: flex;
+  align-items: flex-start;
+  padding-bottom: 1.25rem;
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid $color-border;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.resume-experience-date {
+  background-color: $color-orange;
+  color: #ffffff;
+  border-radius: 999px;
+  padding: 0.75rem 0.4rem;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05rem;
+  margin-right: 1.5rem;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.resume-job-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  margin-bottom: 0.1rem;
+}
+
+.resume-job-meta {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  font-style: italic;
+}
+
+.resume-job-location {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  font-style: italic;
+  color: $color-orange;
+}
+
+.resume-job-text {
+  font-size: 0.85rem;
+}

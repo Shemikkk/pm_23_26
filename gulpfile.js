@@ -17,6 +17,10 @@ const sites = {
   web2: {
     root: 'web2',
     dist: 'dist/web2'
+  },
+  web3: {
+    root: 'web3',
+    dist: 'dist/web3'
   }
 };
 
@@ -24,14 +28,19 @@ function createSiteTasks(siteName, config) {
   const srcRoot = `${config.root}/app`;
   const distRoot = config.dist;
 
-  const paths = {
+  let paths = {
     html: {
       src: `${srcRoot}/index.html`,
       watch: `${srcRoot}/**/*.html`,
       dest: `${distRoot}/`
     },
     styles: {
-      src: `${srcRoot}/scss/**/*.scss`,
+      // Compile only the site entry file to avoid building partials directly
+      src: siteName === 'web3'
+        ? `${srcRoot}/scss/main.scss`
+        : `${srcRoot}/scss/style.scss`,
+      // Watch all SCSS files in the site for live reload
+      watch: `${srcRoot}/scss/**/*.scss`,
       dest: `${distRoot}/css/`
     },
     scripts: {
@@ -57,6 +66,7 @@ function createSiteTasks(siteName, config) {
   function scssTask() {
     return src(paths.styles.src)
       .pipe(sass().on('error', sass.logError))
+      .pipe(rename({ basename: 'index' }))
       .pipe(dest(paths.styles.dest))
       .pipe(cssnano())
       .pipe(rename({ suffix: '.min' }))
@@ -82,7 +92,7 @@ function createSiteTasks(siteName, config) {
 
   function watchTask() {
     watch(paths.html.watch, htmlTask);
-    watch(paths.styles.src, scssTask);
+    watch(paths.styles.watch, scssTask);
     watch(paths.scripts.src, jsTask);
     watch(paths.images.src, imgTask);
   }
@@ -110,20 +120,23 @@ Object.keys(sites).forEach((site) => {
 function bootstrapCss() {
   return src('node_modules/bootstrap/dist/css/bootstrap.min.css')
     .pipe(dest('dist/web1/css'))
-    .pipe(dest('dist/web2/css'));
+    .pipe(dest('dist/web2/css'))
+    .pipe(dest('dist/web3/css'));
 }
 
 function bootstrapJs() {
   return src('node_modules/bootstrap/dist/js/bootstrap.bundle.min.js')
     .pipe(dest('dist/web1/js'))
-    .pipe(dest('dist/web2/js'));
+    .pipe(dest('dist/web2/js'))
+    .pipe(dest('dist/web3/js'));
 }
 
 // Build tasks
 const buildWeb1 = series(siteTasks.web1.build, parallel(bootstrapCss, bootstrapJs));
 const buildWeb2 = series(siteTasks.web2.build, parallel(bootstrapCss, bootstrapJs));
+const buildWeb3 = series(siteTasks.web3.build, parallel(bootstrapCss, bootstrapJs));
 const buildAll = series(
-  parallel(siteTasks.web1.build, siteTasks.web2.build),
+  parallel(siteTasks.web1.build, siteTasks.web2.build, siteTasks.web3.build),
   parallel(bootstrapCss, bootstrapJs)
 );
 
@@ -134,7 +147,7 @@ function serveFactory(site) {
 
     browserSync.init({
       server: { baseDir: config.dist },
-      port: site === 'web2' ? 3001 : 3000
+      port: site === 'web2' ? 3001 : site === 'web3' ? 3002 : 3000
     });
 
     siteTasks[site].watchTask();
@@ -143,6 +156,7 @@ function serveFactory(site) {
 
 const serveWeb1 = series(buildWeb1, serveFactory('web1'));
 const serveWeb2 = series(buildWeb2, serveFactory('web2'));
+const serveWeb3 = series(buildWeb3, serveFactory('web3'));
 
 // Exports
 exports['bootstrap:css'] = bootstrapCss;
@@ -150,10 +164,12 @@ exports['bootstrap:js'] = bootstrapJs;
 
 exports['build:web1'] = buildWeb1;
 exports['build:web2'] = buildWeb2;
+exports['build:web3'] = buildWeb3;
 exports.build = buildAll;
 
 exports['serve:web1'] = serveWeb1;
 exports['serve:web2'] = serveWeb2;
+exports['serve:web3'] = serveWeb3;
 exports.default = serveWeb2;
 
 

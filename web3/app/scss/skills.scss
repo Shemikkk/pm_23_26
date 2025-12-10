@@ -1,0 +1,89 @@
+// partial: skills.scss
+
+.resume-banner {
+  background-color: $color-orange;
+  color: #ffffff;
+  padding: 1.25rem 2.5rem;
+  border-top-right-radius: 70px;
+  border-bottom-right-radius: 70px;
+  margin-right: 18px;
+}
+
+.resume-banner-skills-title {
+  font-size: 1.5rem;
+  letter-spacing: 0.14rem;
+  font-weight: 700;
+}
+
+.resume-contact-pill {
+  background-color: lighten($color-orange, 6%);
+  border-radius: 999px;
+  padding: 0.45rem 0.9rem;
+  font-size: 0.85rem;
+  color: $color-navy;
+}
+
+.resume-contact-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  background-color: #ffffff;
+  color: $color-navy;
+}
+
+.resume-contact-item {
+  font-size: 0.9rem;
+  padding: 0.25rem 0;
+
+  i {
+    width: 1.5rem;
+  }
+}
+
+.resume-skill-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
+
+.resume-banner .progress {
+  background-color: rgba(0, 0, 0, 0.25);
+  height: 4px;
+  border-radius: 999px;
+}
+
+.resume-banner .progress-bar {
+  background-color: $color-navy;
+  border-radius: 999px;
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 50%;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background-color: $color-navy;
+    transform: translateY(-50%);
+  }
+}
+
+.resume-banner-underline {
+  border-top: 1px solid rgba(0, 0, 0, 0.25);
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: -1px;
+    width: 60px;
+    border-top: 3px solid $color-navy;
+  }
+}

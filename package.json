@@ -6,8 +6,10 @@
   "scripts": {
     "dev:web1": "gulp serve:web1",
     "dev:web2": "gulp serve:web2",
+    "dev:web3": "gulp serve:web3",
     "build:web1": "gulp build:web1",
     "build:web2": "gulp build:web2",
+    "build:web3": "gulp build:web3",
     "dev": "gulp serve:web2",
     "build": "gulp build"
   },
