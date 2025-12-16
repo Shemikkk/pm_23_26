@@ -7,10 +7,12 @@
     "dev:web1": "gulp serve:web1",
     "dev:web2": "gulp serve:web2",
     "dev:web3": "gulp serve:web3",
+    "dev:web5": "gulp serve:web5",
     "dev:web4": "gulp serve:web4",
     "build:web1": "gulp build:web1",
     "build:web2": "gulp build:web2",
     "build:web3": "gulp build:web3",
+    "build:web5": "gulp build:web5",
     "build:web4": "gulp build:web4",
     "dev": "gulp serve:web2",
     "build": "gulp build"

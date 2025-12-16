@@ -25,6 +25,10 @@ const sites = {
   web4: {
     root: 'web4',
     dist: 'dist/web4'
+  },
+  web5: {
+    root: 'web5',
+    dist: 'dist/web5'
   }
 };
 
@@ -53,6 +57,10 @@ function createSiteTasks(siteName, config) {
     images: {
       src: `${srcRoot}/img/**/*`,
       dest: `${distRoot}/img/`
+    },
+    assets: {
+      src: `${srcRoot}/*.json`,
+      dest: `${distRoot}/`
     }
   };
 
@@ -93,14 +101,21 @@ function createSiteTasks(siteName, config) {
       .pipe(dest(paths.images.dest));
   }
 
+  function assetsTask() {
+    return src(paths.assets.src)
+      .pipe(dest(paths.assets.dest))
+      .pipe(browserSync.stream());
+  }
+
   function watchTask() {
     watch(paths.html.watch, htmlTask);
     watch(paths.styles.watch, scssTask);
     watch(paths.scripts.src, jsTask);
     watch(paths.images.src, imgTask);
+    watch(paths.assets.src, assetsTask);
   }
 
-  const build = parallel(htmlTask, scssTask, jsTask, imgTask);
+  const build = parallel(htmlTask, scssTask, jsTask, imgTask, assetsTask);
 
   return {
     paths,
@@ -108,6 +123,7 @@ function createSiteTasks(siteName, config) {
     scssTask,
     jsTask,
     imgTask,
+    assetsTask,
     watchTask,
     build
   };
@@ -125,7 +141,8 @@ function bootstrapCss() {
     .pipe(dest('dist/web1/css'))
     .pipe(dest('dist/web2/css'))
     .pipe(dest('dist/web3/css'))
-    .pipe(dest('dist/web4/css'));
+    .pipe(dest('dist/web4/css'))
+    .pipe(dest('dist/web5/css'));
 }
 
 function bootstrapJs() {
@@ -133,7 +150,8 @@ function bootstrapJs() {
     .pipe(dest('dist/web1/js'))
     .pipe(dest('dist/web2/js'))
     .pipe(dest('dist/web3/js'))
-    .pipe(dest('dist/web4/js'));
+    .pipe(dest('dist/web4/js'))
+    .pipe(dest('dist/web5/js'));
 }
 
 // Build tasks
@@ -141,8 +159,9 @@ const buildWeb1 = series(siteTasks.web1.build, parallel(bootstrapCss, bootstrapJ
 const buildWeb2 = series(siteTasks.web2.build, parallel(bootstrapCss, bootstrapJs));
 const buildWeb3 = series(siteTasks.web3.build, parallel(bootstrapCss, bootstrapJs));
 const buildWeb4 = series(siteTasks.web4.build, parallel(bootstrapCss, bootstrapJs));
+const buildWeb5 = series(siteTasks.web5.build, parallel(bootstrapCss, bootstrapJs));
 const buildAll = series(
-  parallel(siteTasks.web1.build, siteTasks.web2.build, siteTasks.web3.build, siteTasks.web4.build),
+  parallel(siteTasks.web1.build, siteTasks.web2.build, siteTasks.web3.build, siteTasks.web4.build, siteTasks.web5.build),
   parallel(bootstrapCss, bootstrapJs)
 );
 
@@ -153,7 +172,7 @@ function serveFactory(site) {
 
     browserSync.init({
       server: { baseDir: config.dist },
-      port: site === 'web2' ? 3001 : site === 'web3' ? 3002 : site === 'web4' ? 3003 : 3000
+      port: site === 'web2' ? 3001 : site === 'web3' ? 3002 : site === 'web4' ? 3003 : site === 'web5' ? 3004 : 3000
     });
 
     siteTasks[site].watchTask();
@@ -164,6 +183,7 @@ const serveWeb1 = series(buildWeb1, serveFactory('web1'));
 const serveWeb2 = series(buildWeb2, serveFactory('web2'));
 const serveWeb3 = series(buildWeb3, serveFactory('web3'));
 const serveWeb4 = series(buildWeb4, serveFactory('web4'));
+const serveWeb5 = series(buildWeb5, serveFactory('web5'));
 
 // Exports
 exports['bootstrap:css'] = bootstrapCss;
@@ -173,12 +193,14 @@ exports['build:web1'] = buildWeb1;
 exports['build:web2'] = buildWeb2;
 exports['build:web3'] = buildWeb3;
 exports['build:web4'] = buildWeb4;
+exports['build:web5'] = buildWeb5;
 exports.build = buildAll;
 
 exports['serve:web1'] = serveWeb1;
 exports['serve:web2'] = serveWeb2;
 exports['serve:web3'] = serveWeb3;
 exports['serve:web4'] = serveWeb4;
+exports['serve:web5'] = serveWeb5;
 exports.default = serveWeb2;
 
 

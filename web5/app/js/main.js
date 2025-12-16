@@ -1,13 +1,31 @@
-// Custom JS for the resume page (web4)
+// Custom JS for the resume page (web5)
 // Bootstrap's JS (bootstrap.bundle.min.js) is loaded before this file.
 
-console.log('Web4 resume page loaded');
+console.log('Web5 resume page loaded');
 
 document.addEventListener('DOMContentLoaded', function () {
-  // 1) Full name injection (no HTML insertion)
-  const FULL_NAME = 'Jonathan A. Eisenhart';
-  const nameEl = document.getElementById('personName');
-  if (nameEl) nameEl.textContent = FULL_NAME;
+  // Load data.json via Fetch API
+  async function loadData() {
+    try {
+      const res = await fetch('data.json', { cache: 'no-store' });
+      console.log('Fetch response:', res);
+      if (!res.ok) throw new Error('Failed to load data.json');
+      return await res.json();
+    } catch (err) {
+      console.error(err);
+      const status = document.getElementById('appStatus');
+      if (status) status.textContent = 'Unable to load data.json';
+      return null;
+    }
+  }
+
+  function renderName(person) {
+    const nameEl = document.getElementById('personName');
+    if (!nameEl || !person) return;
+    const first = person.firstName || '';
+    const last = person.lastName || '';
+    nameEl.textContent = `${first} ${last}`.trim();
+  }
 
   // 2) Section toggles with Bootstrap Collapse API and arrow rotation
   const toggleButtons = document.querySelectorAll('.js-section-toggle[data-bs-target]');
@@ -41,13 +59,8 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   // 3) Skills data array + dynamic rendering
-  const skillsData = [
-    { label: 'Adobe Photoshop', value: 90 },
-    { label: 'Adobe Illustrator', value: 85 },
-    { label: 'Microsoft Word', value: 80 },
-    { label: 'Microsoft PowerPoint', value: 80 },
-    { label: 'HTML 5 / CSS 3', value: 75 }
-  ];
+  // Render skills from data.json
+  let skillsData = [];
 
   function renderSkills(items) {
     const container = document.getElementById('dynamicSkills');
@@ -71,5 +84,11 @@ document.addEventListener('DOMContentLoaded', function () {
     container.appendChild(frag);
   }
 
-  renderSkills(skillsData);
+  loadData().then((data) => {
+    console.log('Loaded data:', data);
+    if (!data) return;
+    renderName(data.person);
+    skillsData = Array.isArray(data.skills) ? data.skills : [];
+    renderSkills(skillsData);
+  });
 });

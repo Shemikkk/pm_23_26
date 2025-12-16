@@ -1,0 +1,43 @@
+{
+  "person": {
+    "firstName": "John",
+    "lastName": "Eisenhart",
+    "role": "Graphic & Web Designer",
+    "phone": "+1-718-310-5588",
+    "website": "www.yourwebsite.com",
+    "location": "769 Prudence Street Lincoln Park."
+  },
+  "skills": [
+    { "label": "Adobe Photoshop", "value": 90 },
+    { "label": "Adobe Illustrator", "value": 85 },
+    { "label": "Microsoft Word", "value": 80 },
+    { "label": "Microsoft PowerPoint", "value": 80 },
+    { "label": "HTML 5 / CSS 3", "value": 75 }
+  ],
+  "jobs": [
+    {
+      "from": 2019,
+      "to": "Present",
+      "title": "Senior Web Designer",
+      "company": "Creative Agency",
+      "location": "Chicago",
+      "text": "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley."
+    },
+    {
+      "from": 2015,
+      "to": 2019,
+      "title": "Graphic Designer",
+      "company": "Creative Market",
+      "location": "United Kingdom",
+      "text": "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley."
+    },
+    {
+      "from": 2013,
+      "to": 2015,
+      "title": "Marketing Manager",
+      "company": "Marketing Agency",
+      "location": "United Kingdom",
+      "text": "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley."
+    }
+  ]
+}

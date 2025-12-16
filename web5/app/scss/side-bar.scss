@@ -1,0 +1,143 @@
+// partial: side-bar.scss
+
+.resume-sidebar {
+  background-color: $color-navy;
+  color: #ffffff;
+  padding: 2.2rem 2.2rem 2.5rem;
+
+  .sidebar-section-title {
+    font-size: 1rem;
+    letter-spacing: 0.12rem;
+  }
+
+  .sidebar-divider {
+    border-top: 1px solid rgba(255, 255, 255, 0.23);
+    margin: 0.75rem 0 1rem;
+  }
+
+  .degree-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+
+  .degree-school {
+    font-size: 0.85rem;
+    opacity: 0.9;
+  }
+
+  .degree-text {
+    font-size: 0.8rem;
+    opacity: 0.9;
+  }
+
+  .language-label {
+    font-size: 0.8rem;
+  }
+
+  .language-percentage {
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+}
+
+.sidebar-underline {
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: -1px;
+    width: 48px;
+    border-top: 3px solid $color-orange;
+  }
+}
+
+.education-item {
+  display: flex;
+  align-items: flex-start;
+}
+
+.education-date {
+  background-color: $color-orange;
+  color: #ffffff;
+  border-radius: 999px;
+  padding: 0.7rem 0.4rem;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06rem;
+  margin-right: 1.25rem;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.education-body {
+  flex: 1;
+}
+
+.reference-name {
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.reference-address {
+  color: $color-orange;
+  font-style: italic;
+}
+
+.language-circles {
+  margin-top: 0.5rem;
+}
+
+.language-circle {
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  position: relative;
+  background-color: darken($color-navy, 5%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.25rem;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 6px;
+    border-radius: 50%;
+    background-color: darken($color-navy, 5%);
+  }
+}
+
+.language-circle-percent {
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1;
+  position: relative;
+  z-index: 1;
+}
+
+.language-circle-label {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  margin-top: 0.1rem;
+  position: relative;
+  z-index: 1;
+}
+
+.language-circle--95 {
+  background-image: conic-gradient($color-orange 0deg 342deg, darken($color-navy, 5%) 342deg 360deg);
+}
+
+.language-circle--60 {
+  background-image: conic-gradient($color-orange 0deg 216deg, darken($color-navy, 5%) 216deg 360deg);
+}
+
+.language-circle--45 {
+  background-image: conic-gradient($color-orange 0deg 162deg, darken($color-navy, 5%) 162deg 360deg);
+}
