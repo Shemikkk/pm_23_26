@@ -21,6 +21,10 @@ const sites = {
   web3: {
     root: 'web3',
     dist: 'dist/web3'
+  },
+  web4: {
+    root: 'web4',
+    dist: 'dist/web4'
   }
 };
 
@@ -34,13 +38,12 @@ function createSiteTasks(siteName, config) {
       watch: `${srcRoot}/**/*.html`,
       dest: `${distRoot}/`
     },
-    styles: {
-      // Compile only the site entry file to avoid building partials directly
-      src: siteName === 'web3'
-        ? `${srcRoot}/scss/main.scss`
-        : `${srcRoot}/scss/style.scss`,
-      // Watch all SCSS files in the site for live reload
-      watch: `${srcRoot}/scss/**/*.scss`,
+   styles: {
+  src:
+    siteName === 'web1' ? `${srcRoot}/scss/style.scss` :
+    siteName === 'web2' ? `${srcRoot}/scss/main.scss`  :
+    `${srcRoot}/scss/main.scss`, // web3, web4
+     watch: `${srcRoot}/scss/**/*.scss`,
       dest: `${distRoot}/css/`
     },
     scripts: {
@@ -121,22 +124,25 @@ function bootstrapCss() {
   return src('node_modules/bootstrap/dist/css/bootstrap.min.css')
     .pipe(dest('dist/web1/css'))
     .pipe(dest('dist/web2/css'))
-    .pipe(dest('dist/web3/css'));
+    .pipe(dest('dist/web3/css'))
+    .pipe(dest('dist/web4/css'));
 }
 
 function bootstrapJs() {
   return src('node_modules/bootstrap/dist/js/bootstrap.bundle.min.js')
     .pipe(dest('dist/web1/js'))
     .pipe(dest('dist/web2/js'))
-    .pipe(dest('dist/web3/js'));
+    .pipe(dest('dist/web3/js'))
+    .pipe(dest('dist/web4/js'));
 }
 
 // Build tasks
 const buildWeb1 = series(siteTasks.web1.build, parallel(bootstrapCss, bootstrapJs));
 const buildWeb2 = series(siteTasks.web2.build, parallel(bootstrapCss, bootstrapJs));
 const buildWeb3 = series(siteTasks.web3.build, parallel(bootstrapCss, bootstrapJs));
+const buildWeb4 = series(siteTasks.web4.build, parallel(bootstrapCss, bootstrapJs));
 const buildAll = series(
-  parallel(siteTasks.web1.build, siteTasks.web2.build, siteTasks.web3.build),
+  parallel(siteTasks.web1.build, siteTasks.web2.build, siteTasks.web3.build, siteTasks.web4.build),
   parallel(bootstrapCss, bootstrapJs)
 );
 
@@ -147,7 +153,7 @@ function serveFactory(site) {
 
     browserSync.init({
       server: { baseDir: config.dist },
-      port: site === 'web2' ? 3001 : site === 'web3' ? 3002 : 3000
+      port: site === 'web2' ? 3001 : site === 'web3' ? 3002 : site === 'web4' ? 3003 : 3000
     });
 
     siteTasks[site].watchTask();
@@ -157,6 +163,7 @@ function serveFactory(site) {
 const serveWeb1 = series(buildWeb1, serveFactory('web1'));
 const serveWeb2 = series(buildWeb2, serveFactory('web2'));
 const serveWeb3 = series(buildWeb3, serveFactory('web3'));
+const serveWeb4 = series(buildWeb4, serveFactory('web4'));
 
 // Exports
 exports['bootstrap:css'] = bootstrapCss;
@@ -165,11 +172,13 @@ exports['bootstrap:js'] = bootstrapJs;
 exports['build:web1'] = buildWeb1;
 exports['build:web2'] = buildWeb2;
 exports['build:web3'] = buildWeb3;
+exports['build:web4'] = buildWeb4;
 exports.build = buildAll;
 
 exports['serve:web1'] = serveWeb1;
 exports['serve:web2'] = serveWeb2;
 exports['serve:web3'] = serveWeb3;
+exports['serve:web4'] = serveWeb4;
 exports.default = serveWeb2;
 
 

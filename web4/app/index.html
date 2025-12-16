@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Resume — Web4</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap CSS (built locally into dist/web4/css) -->
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+
+  <!-- Font Awesome (CDN for icons) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Custom styles -->
+  <link rel="stylesheet" href="css/index.min.css">
+</head>
+
+<body class="resume-body">
+  <div class="py-5">
+    <div class="container-lg">
+      <div class="row justify-content-center">
+        <div class="col-xl-9">
+          <div class="resume-wrapper shadow-sm">
+            @@include('html/partials/header.html')
+
+            @@include('html/partials/skills.html')
+
+            <div class="row g-0 resume-main-row">
+              <!-- Sidebar -->
+              @@include('html/partials/side-bar.html')
+
+              <!-- Main content column -->
+              <main class="col-md-8 resume-content">
+                @@include('html/partials/experience.html')
+
+                @@include('html/partials/hobbies.html')
+              </main>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Vendor & custom scripts -->
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="js/main.min.js"></script>
+</body>
+</html>
